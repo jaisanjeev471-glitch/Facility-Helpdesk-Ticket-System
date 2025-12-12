@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Facility Helpdesk — Design System Preview</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Color tokens */
+    --color-primary: #1A73E8;
+    --color-primary-dark: #0F4DB3;
+    --color-secondary: #F9A826;
+    --color-success: #34A853;
+    --color-warning: #FBBC05;
+    --color-danger: #D72638;
+    --color-info: #4285F4;
+
+    --bg-00: #F5F7FA;
+    --surface: #FFFFFF;
+    --border: #E0E5EC;
+    --muted: #6B6B6B;
+    --text: #1A1A1A;
+
+    /* Priority */
+    --priority-low: #A2D2FF;
+    --priority-medium: #FFCD4B;
+    --priority-high: #FF8E6E;
+    --priority-urgent: #D72638;
+
+    /* Radii */
+    --r-radius-2: 4px;
+    --r-radius-4: 8px;
+    --r-radius-8: 12px;
+    --r-radius-pill: 20px;
+    --r-radius-round: 9999px;
+
+    /* Spacing */
+    --space-xxs: 4px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+
+    /* Sizes */
+    --button-h: 48px;
+    --input-h: 52px;
+    --fab: 56px;
+
+    /* Shadows */
+    --elev-1: 0 1px 3px rgba(0,0,0,0.12);
+    --elev-2: 0 4px 12px rgba(0,0,0,0.12);
+
+    /* Typography */
+    --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    --h1-size: 24px;
+    --h2-size: 20px;
+    --h3-size: 18px;
+    --body-size: 14px;
+    --label-size: 12px;
+  }
+
+  /* Page layout */
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:var(--font-family);
+    background:var(--bg-00);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    padding:28px;
+  }
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+  }
+
+  h1{font-size:var(--h1-size); margin:0 0 var(--space-md) 0}
+  h2{font-size:var(--h2-size); margin:var(--space-lg) 0 var(--space-sm)}
+  h3{font-size:var(--h3-size); margin:var(--space-md) 0 var(--space-xs)}
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap:var(--space-lg);
+  }
+
+  /* Palette */
+  .palette { grid-column: span 4; background:var(--surface); border-radius:var(--r-radius-4); padding:var(--space-md); box-shadow:var(--elev-1); border:1px solid var(--border) }
+  .token { display:flex; align-items:center; margin-bottom:12px }
+  .swatch { width:64px; height:40px; border-radius:8px; margin-right:12px; border:1px solid rgba(0,0,0,0.06) }
+  .token b{display:block;font-size:13px}
+  .token small{display:block;color:var(--muted); font-size:12px}
+
+  /* Typography panel */
+  .typography { grid-column: span 8; background:var(--surface); border-radius:var(--r-radius-4); padding:var(--space-md); box-shadow:var(--elev-1); border:1px solid var(--border)}
+  .type-sample{margin-bottom:18px}
+  .type-sample p{margin:6px 0 0 0;color:var(--muted)}
+
+  /* Buttons */
+  .controls{ background:var(--surface); border-radius:var(--r-radius-4); padding:var(--space-md); box-shadow:var(--elev-1); border:1px solid var(--border) }
+  .btn{display:inline-flex;align-items:center;justify-content:center;height:var(--button-h); padding:0 18px; border-radius:var(--r-radius-8); border:none; font-weight:600; cursor:pointer; margin:8px}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--color-primary); color:white; box-shadow:var(--elev-2)}
+  .btn-primary:hover{background:var(--color-primary-dark)}
+  .btn-secondary{background:white; color:var(--color-primary); border:2px solid var(--color-primary)}
+  .btn-tertiary{background:transparent; color:var(--color-primary); border: none;}
+  .btn-danger{background:var(--color-danger); color:white}
+
+  /* Inputs */
+  .form-row{display:flex;gap:var(--space-md);align-items:flex-start;margin-bottom:var(--space-md)}
+  .input{
+    height:var(--input-h);
+    min-width:240px;
+    border-radius:var(--r-radius-4);
+    border:1px solid var(--border);
+    padding:0 12px;
+    background:var(--surface);
+    outline:none;
+    transition:box-shadow .14s, border-color .12s;
+  }
+  .input:focus{border-color:var(--color-primary); box-shadow:0 6px 20px rgba(26,115,232,0.08)}
+  .textarea{min-height:100px; padding:12px; resize:vertical}
+
+  /* Chips */
+  .chip{display:inline-block;padding:6px 12px;border-radius:var(--r-radius-pill); color:white;font-weight:600;margin:6px 6px 6px 0;font-size:13px}
+  .chip.low{background:var(--priority-low); color:white}
+  .chip.medium{background:var(--priority-medium); color:white}
+  .chip.high{background:var(--priority-high); color:white}
+  .chip.urgent{background:var(--priority-urgent); color:white}
+  .filter-chip{background:#F1F3F5;color:var(--muted); padding:6px 10px;border-radius:999px}
+
+  /* Cards */
+  .card{background:var(--surface);border-radius:var(--r-radius-8);padding:var(--space-md);box-shadow:var(--elev-1);border:1px solid var(--border)}
+  .ticket-card{width:320px}
+  .ticket-title{font-weight:700;margin-bottom:6px}
+  .meta{color:var(--muted);font-size:13px}
+  .status-bar{height:6px;border-radius:6px;margin-top:12px;overflow:hidden}
+
+  /* Badges */
+  .badge{display:inline-block;padding:6px 10px;border-radius:10px;color:white;font-weight:700;margin-right:8px}
+  .badge.open{background:var(--color-primary)}
+  .badge.inprogress{background:var(--color-warning); color:#111}
+  .badge.resolved{background:var(--color-success)}
+  .badge.onhold{background:#6F42C1}
+  .badge.closed{background:#3C3C3C}
+
+  /* Chat preview */
+  .chat{background:linear-gradient(180deg,#f8fafc,white);padding:12px;border-radius:12px;max-width:520px}
+  .bubble.user{background:var(--color-primary); color:white; align-self:flex-end; border-radius:12px 12px 2px 12px}
+  .bubble.other{background:#F1F3F5; color:var(--text); align-self:flex-start; border-radius:12px 12px 12px 2px}
+  .bubble{padding:10px 12px; margin:6px 0; display:inline-block; max-width:70%}
+
+  /* Misc */
+  .section{margin-bottom:24px}
+  .row{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+  pre{background:#0f1724;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+  .copy-btn{background:var(--color-primary); color:white; border:none; padding:8px 12px; border-radius:8px; cursor:pointer}
+
+  /* Responsive */
+  @media (max-width:960px){
+    .grid{grid-template-columns: repeat(1,1fr)}
+    .palette{grid-column:span 1}
+    .typography{grid-column:span 1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Facility Helpdesk — Design System Preview</h1>
+
+  <div class="grid">
+    <!-- Palette -->
+    <div class="palette section">
+      <h3>Color Palette</h3>
+      <div class="token"><div class="swatch" style="background:var(--color-primary)"></div><div><b>--color-primary</b><small>#1A73E8</small></div></div>
+      <div class="token"><div class="swatch" style="background:var(--color-primary-dark)"></div><div><b>--color-primary-dark</b><small>#0F4DB3</small></div></div>
+      <div class="token"><div class="swatch" style="background:var(--color-secondary)"></div><div><b>--color-secondary</b><small>#F9A826</small></div></div>
+      <div class="token"><div class="swatch" style="background:var(--color-success)"></div><div><b>--color-success</b><small>#34A853</small></div></div>
+      <div class="token"><div class="swatch" style="background:var(--color-warning)"></div><div><b>--color-warning</b><small>#FBBC05</small></div></div>
+      <div class="token"><div class="swatch" style="background:var(--color-danger)"></div><div><b>--color-danger</b><small>#D72638</small></div></div>
+      <hr/>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div class="token"><div class="swatch" style="background:var(--priority-low)"></div><div><b>priority-low</b><small>#A2D2FF</small></div></div>
+        <div class="token"><div class="swatch" style="background:var(--priority-medium)"></div><div><b>priority-medium</b><small>#FFCD4B</small></div></div>
+        <div class="token"><div class="swatch" style="background:var(--priority-high)"></div><div><b>priority-high</b><small>#FF8E6E</small></div></div>
+        <div class="token"><div class="swatch" style="background:var(--priority-urgent)"></div><div><b>priority-urgent</b><small>#D72638</small></div></div>
+      </div>
+      <div style="margin-top:12px">
+        <button class="copy-btn" id="copyTokens">Copy tokens JSON to clipboard</button>
+        <span id="copyMsg" style="margin-left:10px;color:green;display:none">Copied ✔</span>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="typography section">
+      <h3>Typography</h3>
+      <div class="type-sample">
+        <div style="font-size:24px;font-weight:700">Heading — 24px / 700</div>
+        <p>Used for primary titles and key screens.</p>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:20px;font-weight:700">Heading — 20px / 700</div>
+        <p>Section headings, dialogs.</p>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:16px;font-weight:600">Body Large — 16px / 600</div>
+        <p>Primary body text for cards and lists.</p>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:14px">Body — 14px / 400</div>
+        <p>Secondary text, descriptions, metadata.</p>
+      </div>
+      <div class="type-sample">
+        <div style="font-size:12px;font-weight:600">Label — 12px / 600</div>
+        <p>Chips, labels, small UI text.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Components -->
+  <h2>Components</h2>
+
+  <div class="grid" style="grid-template-columns: 1fr 1fr; gap:24px">
+    <div class="controls card section">
+      <h3>Buttons</h3>
+      <div class="row" style="align-items:center">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-tertiary">Tertiary</button>
+        <button class="btn btn-danger">Danger</button>
+        <div style="margin-left:12px">
+          <div style="font-size:12px;color:var(--muted)">FAB</div>
+          <div style="margin-top:8px"><button class="btn btn-primary" style="width:var(--fab);height:var(--fab;border-radius:50%;padding:0"><span style="font-size:20px">+</span></button></div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px">Inputs</h3>
+      <div class="form-row">
+        <input class="input" placeholder="Text input" />
+        <input class="input" placeholder="Email" />
+      </div>
+      <div class="form-row">
+        <textarea class="input textarea" placeholder="Multiline text"></textarea>
+      </div>
+
+      <h3 style="margin-top:18px">Chips</h3>
+      <div class="row">
+        <span class="chip low">Low</span>
+        <span class="chip medium">Medium</span>
+        <span class="chip high">High</span>
+        <span class="chip urgent">Urgent</span>
+        <span class="filter-chip">Facilities</span>
+        <span class="filter-chip">Events</span>
+      </div>
+    </div>
+
+    <div class="card section">
+      <h3>Ticket Card</h3>
+      <div class="ticket-card">
+        <div class="ticket-title">AC Unit Not Cooling — Conference Room A</div>
+        <div class="meta">Maintenance • Building A, Floor 3</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="badge open">Open</span>
+            <span class="badge inprogress">In Progress</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:28px;height:28px;border-radius:999px;background:#dfe9f9;display:flex;align-items:center;justify-content:center">T</div>
+          </div>
+        </div>
+        <div class="status-bar" style="background:linear-gradient(90deg,var(--color-primary) 40%, var(--color-warning) 60%, var(--color-success) 100%)"></div>
+      </div>
+
+      <h3 style="margin-top:18px">Chat / Thread</h3>
+      <div class="chat">
+        <div style="display:flex;flex-direction:column;align-items:flex-start">
+          <div class="bubble other">Team: We'll check the AC condenser tomorrow morning.</div>
+          <div class="bubble user" style="align-self:flex-end">User: Thanks — please prioritize for the meeting.</div>
+          <div class="bubble other">Team: Spare part requested. Status: On Hold</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Status Badges & Tokens</h2>
+  <div class="row section">
+    <div class="card" style="padding:16px">
+      <h3>Badges</h3>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span class="badge open">OPEN</span>
+        <span class="badge inprogress">IN PROGRESS</span>
+        <span class="badge onhold">ON HOLD</span>
+        <span class="badge resolved">RESOLVED</span>
+        <span class="badge closed">CLOSED</span>
+      </div>
+    </div>
+
+    <div class="card" style="padding:16px">
+      <h3>Token Snippets</h3>
+      <small style="color:var(--muted)">Copy tokens JSON for Figma Tokens / dev use</small>
+      <pre id="jsonBlock" style="height:170px;overflow:auto">
+{
+  "colors": {
+    "primary": "#1A73E8",
+    "primary-dark":"#0F4DB3",
+    "secondary":"#F9A826",
+    "success":"#34A853",
+    "warning":"#FBBC05",
+    "danger":"#D72638",
+    "bg-00":"#F5F7FA",
+    "surface":"#FFFFFF",
+    "border":"#E0E5EC"
+  },
+  "typography": {
+    "h1":"24px/700",
+    "h2":"20px/700",
+    "body":"14px/400",
+    "label":"12px/600"
+  }
+}
+      </pre>
+      </div>
+  </div>
+
+  <h2>Examples & Usage</h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr; gap:24px">
+    <div class="card section">
+      <h3>Form Example (Raise Ticket)</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <input class="input" placeholder="Ticket title" />
+        <div style="display:flex;gap:12px">
+          <select class="input" style="height:48px">
+            <option>Maintenance</option>
+            <option>Events</option>
+            <option>Transport</option>
+          </select>
+          <select class="input" style="height:48px">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+            <option>Urgent</option>
+          </select>
+        </div>
+        <textarea class="input textarea" placeholder="Describe the issue..."></textarea>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-secondary">Attach Image</button>
+          <button class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card section">
+      <h3>Ticket Lifecycle (Notes)</h3>
+      <ol style="color:var(--muted)">
+        <li>User raises ticket → System assigns via rules</li>
+        <li>Team Lead reviews → Assign technician</li>
+        <li>Technician updates thread & uploads proof</li>
+        <li>User verifies and closes / reopens if needed</li>
+        <li>Admin monitors SLAs and reassigns as needed</li>
+      </ol>
+    </div>
+  </div>
+
+  <div style="height:60px"></div>
+</div>
+
+<script>
+  // tokens JSON for clipboard
+  const tokensJSON = {
+    "$schema":"https://raw.githubusercontent.com/johnsonandjohnson/design-tokens/master/schemas/tokens.schema.json",
+    "name":"Facility Helpdesk - Tokens",
+    "colors":{
+      "primary":"#1A73E8","primary-dark":"#0F4DB3","secondary":"#F9A826","success":"#34A853","warning":"#FBBC05","danger":"#D72638",
+      "bg-00":"#F5F7FA","surface":"#FFFFFF","border":"#E0E5EC"
+    },
+    "typography":{"h1":"24px/700","h2":"20px/700","body":"14px/400","label":"12px/600"}
+  };
+
+  document.getElementById('copyTokens').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(tokensJSON, null, 2));
+      const el = document.getElementById('copyMsg');
+      el.style.display = 'inline';
+      setTimeout(()=>el.style.display='none',1500);
+    } catch(e){
+      alert('Please allow clipboard access or copy manually from the code block.');
+    }
+  });
+</script>
+</body>
+</html>
